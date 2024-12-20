@@ -48,7 +48,7 @@
 	"revision"			: "Debug GC MQ (EU)",
 	"console"			: "Native",
 	"compress"			: 0,
-	"patch"				: "Decompressed\\star_fox_surival.bps",
+	"patch"				: "Decompressed\\star_fox_survival.bps",
 	"output"			: "star_fox_survival",
 	"tooltip"			: "Play as Fox whos Arwing has crash landed on an unknown planet{0}Survive for as long as you can"
 
@@ -61,7 +61,7 @@
 	"compress"			: 0,
 	"patch"				: "Decompressed\\sands_of_time.bps",
 	"output"			: "sands_of_time",
-	"tooltip"			: "Play as Fox whos Arwing has crash landed on an unknown planet{0}Survive for as long as you can"
+	"tooltip"			: "A large-sized ROM hack in a completely new setting"
 
 }, {
 
