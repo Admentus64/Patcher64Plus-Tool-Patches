@@ -69,7 +69,7 @@
 	"version"			: "1.05",
 	"console"			: "Native",
 	"compress"			: 0,
-	"patch"				: "Decompressed\\time_lost.bps",
+	"patch"				: "Compressed\\time_lost.bps",
 	"output"			: "time_lost",
 	"tooltip"			: "A sequel to Master of Time, that takes place 4 years after the events of Abello"
 
