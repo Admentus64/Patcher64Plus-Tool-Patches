@@ -1,6 +1,6 @@
 [ {
 	"title"			: "The Legend of Zelda: Oracle of Secrets",
-	"version"		: "0.163 Beta",
+	"version"		: "0.164 Beta",
 	"vc_title"		: "Secrets",
 	"patch"			: "Compressed\\oracle_of_secrets.bps",
 	"output"		: "oracle_of_secrets",
