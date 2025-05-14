@@ -115,7 +115,6 @@ function ByteOptions() {
 
 
 
-
     # RECOVERY #
 
     if (IsDefault $Redux.Recovery.Heart       -Not)   { ChangeBytes -Offset   "AFD14E"             -Values (Get16Bit $Redux.Recovery.Heart.Text)       }
