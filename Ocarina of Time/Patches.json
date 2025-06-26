@@ -55,6 +55,17 @@
 
 }, {
 
+	"title"				: "Sands of Time",
+	"version"			: "1.22",
+	"revision"			: "Debug GC MQ (EU)",
+	"console"			: "Native",
+	"compress"			: 0,
+	"patch"				: "Decompressed\\sands_of_time.bps",
+	"output"			: "sands_of_time",
+	"tooltip"			: "A large-sized ROM hack in a completely new setting"
+
+}, {
+
 	"title"				: "Time Lost",
 	"version"			: "1.05",
 	"console"			: "Native",
