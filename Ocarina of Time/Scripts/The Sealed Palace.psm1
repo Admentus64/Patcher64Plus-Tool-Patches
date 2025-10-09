@@ -7,11 +7,10 @@ function ByteOptions() {
     if (IsChecked $Redux.Gameplay.BlackBars)         { ChangeBytes -Offset "B2ABEC" -Values "00000000" }
     if (IsChecked $Redux.Gameplay.TextSpeed)         { ChangeBytes -Offset "B80AAB" -Values "02" }
     if (IsChecked $Redux.Gameplay.FastRang) 		 { ChangeBytes -Offset "1B7CE8B" -Values "10"; ChangeBytes -Offset "1C0F5E2" -Values "41C0" }
-    if (IsChecked $Redux.Gameplay.FastArrows)        { ChangeBytes -Offset @("1DBF502", "1DC14C2", "1DC34A2") -Values "0010" }
+    if (IsChecked $Redux.Gameplay.FastBullets)       { ChangeBytes -Offset @("1BD2E82", "1BD2EBE") -Values "4330"; ChangeBytes -Offset @("1DBF502", "1DC14C2", "1DC34A2") -Values "0010" }
     if (IsChecked $Redux.Gameplay.FastCharge) 		 { ChangeBytes -Offset @("1C51C58", "1C51C64") -Values "3E12159A"; ChangeBytes -Offset "1C51C6C" -Values "3DC448CD"; ChangeBytes -Offset @("1C51C60", "1C51C70", "1C51C9C") -Values "3E132200" }
     if (IsChecked $Redux.Gameplay.FastRoll) 	     { ChangeBytes -Offset "1B9BFD0" -Values "4030" }
     if (IsChecked $Redux.Gameplay.FastZTargetMove)   { ChangeBytes -Offset "1B9C018" -Values "3FA0672D" }
-
 
     # SOUNDS / VOICES #
 
@@ -25,10 +24,9 @@ function ByteOptions() {
         if (TestFile ($GameFiles.binaries + "\" + $file)) { PatchBytes -Offset "1A95E0" -Patch $file }
     }
 
-
     # HERO MODE #
 
-    if (IsIndex -Elem $Redux.Hero.MonsterHP -Index 3 -Not) { # Monsters
+    if (IsIndex -Elem $Redux.Hero.MonsterHP -Index 3 -Not) {
         if (IsIndex -Elem $Redux.Hero.MonsterHP) { $multi = 0 } else { [float]$multi = [float]$Redux.Hero.MonsterHP.text.split('x')[0] }
 
         MultiplyBytes -Offset @("1D349DF", "1BE1167") -Factor $multi -Max 127 # Like-Like, Peehat, 
@@ -48,7 +46,7 @@ function ByteOptions() {
         MultiplyBytes -Offset   "1C18D8C"             -Factor $multi -Max 127 # Skulltula
     }
 
-    if (IsIndex -Elem $Redux.Hero.MiniBossHP -Index 3 -Not) { # Mini-Bosses
+    if (IsIndex -Elem $Redux.Hero.MiniBossHP -Index 3 -Not) {
         if (IsIndex -Elem $Redux.Hero.MiniBossHP) { $multi = 0 } else { [float]$multi = [float]$Redux.Hero.MiniBossHP.text.split('x')[0] }
 
         MultiplyBytes -Offset @("1BA74E3", "1CC26FB", "1C9566C") -Factor $multi -Max 127 # Stalfos, Dead Hand, Poe Sisters
@@ -63,33 +61,32 @@ function ByteOptions() {
             $value = $ByteArrayGame[(GetDecimal "1DCAC07")]; $value--; $value *= $multi; $value++;
             ChangeBytes -Offset "1DCAC07" -Values $value; ChangeBytes -Offset "1DCABDB" -Values $value 
         }
-        else { ChangeBytes -Offset "1DC9677" -Values "01"; ChangeBytes -Offset "1DCAC07" -Values "01"; ChangeBytes -Offset "1DCABDB" -Values "01" }
+        else { ChangeBytes -Offset "1DC9677" -Values "01"; ChangeBytes -Offset "1DCAC07" -Values "01"; ChangeBytes -Offset "1DCABDB" -Values "01" } # Iron Knuckle
     }
     
-    if (IsIndex -Elem $Redux.Hero.BossHP -Index 3 -Not) { # Bosses
+    if (IsIndex -Elem $Redux.Hero.BossHP -Index 3 -Not) {
         if (IsIndex -Elem $Redux.Hero.BossHP) { $multi = 0 } else { [float]$multi = [float]$Redux.Hero.BossHP.text.split('x')[0] }
 
-        MultiplyBytes -Offset   "1BF9057"             -Factor $multi -Max 127  # Gohma
-        MultiplyBytes -Offset @("1CE1163", "1CE13AF") -Factor $multi -Max 127  # Barinade
-        MultiplyBytes -Offset @("1D24A23", "1D21D93") -Factor $multi -Max 127  # Twinrova
-        MultiplyBytes -Offset   "1BF4F5B"             -Factor $multi -Max 127  # King Dodongo
-        MultiplyBytes -Offset   "1C9E957"             -Factor $multi -Max 127  # Volvagia
-        MultiplyBytes -Offset   "1CF7F8F"             -Factor $multi -Max 127  # Morpha
-        MultiplyBytes -Offset   "1D4BBA4"             -Factor $multi -Max 127  # Bongo Bongo
-        MultiplyBytes -Offset   "1C454B3"             -Factor $multi -Max 127 -Min 4 # Phantom Ganon
-        MultiplyBytes -Offset   "1E6A57B"             -Factor $multi -Max 127 -Min 3 # Ganon
+        MultiplyBytes -Offset   "1BF9057"             -Factor $multi -Max 127 # Gohma
+        MultiplyBytes -Offset @("1CE1163", "1CE13AF") -Factor $multi -Max 127 # Barinade
+        MultiplyBytes -Offset @("1D24A23", "1D21D93") -Factor $multi -Max 127 # Twinrova
+        MultiplyBytes -Offset   "1BF4F5B"             -Factor $multi -Max 127 # King Dodongo
+        MultiplyBytes -Offset   "1C9E957"             -Factor $multi -Max 127 # Volvagia
+        MultiplyBytes -Offset   "1CF7F8F"             -Factor $multi -Max 127 # Morpha
+        MultiplyBytes -Offset   "1D4BBA4"             -Factor $multi -Max 127 # Bongo Bongo
+        MultiplyBytes -Offset   "1C454B3"             -Factor $multi -Min 4 -Max 127 # Phantom Ganon
+        MultiplyBytes -Offset   "1E6A57B"             -Factor $multi -Min 3 -Max 127 # Ganon
     }
     
-    if     (IsText -Elem $Redux.Hero.Damage -Compare "2x Damage")          { ChangeBytes -Offset "1B7DFEA" -Values "2BC3" }
-    elseif (IsText -Elem $Redux.Hero.Damage -Compare "4x Damage")          { ChangeBytes -Offset "1B7DFEA" -Values "2B83" }
-    elseif (IsText -Elem $Redux.Hero.Damage -Compare "8x Damage")          { ChangeBytes -Offset "1B7DFEA" -Values "2B43" }
-    if     (IsText -Elem $Redux.Hero.MagicUsage -Compare "2x Magic Usage") { ChangeBytes -Offset "AFE8C6" -Values "2C40" }
-    elseif (IsText -Elem $Redux.Hero.MagicUsage -Compare "4x Magic Usage") { ChangeBytes -Offset "AFE8C6" -Values "2C80" }
-    elseif (IsText -Elem $Redux.Hero.MagicUsage -Compare "8x Magic Usage") { ChangeBytes -Offset "AFE8C6" -Values "2CC0" }
+    if     (IsText -Elem $Redux.Hero.Damage     -Compare "2x Damage")      { ChangeBytes -Offset "1B7DFEA" -Values "2BC3" }
+    elseif (IsText -Elem $Redux.Hero.Damage     -Compare "4x Damage")      { ChangeBytes -Offset "1B7DFEA" -Values "2B83" }
+    elseif (IsText -Elem $Redux.Hero.Damage     -Compare "8x Damage")      { ChangeBytes -Offset "1B7DFEA" -Values "2B43" }
+    if     (IsText -Elem $Redux.Hero.MagicUsage -Compare "2x Magic Usage") { ChangeBytes -Offset "AFE8C6"  -Values "2C40" }
+    elseif (IsText -Elem $Redux.Hero.MagicUsage -Compare "4x Magic Usage") { ChangeBytes -Offset "AFE8C6"  -Values "2C80" }
+    elseif (IsText -Elem $Redux.Hero.MagicUsage -Compare "8x Magic Usage") { ChangeBytes -Offset "AFE8C6"  -Values "2CC0" }
 
-    if (IsChecked $Redux.Hero.NoBottledFairy) { ChangeBytes -Offset "1B9A7F4"  -Values "00000000" }
-    
-    
+    if (IsChecked $Redux.Hero.NoBottledFairy) { ChangeBytes -Offset "1B9A7F4" -Values "00000000" }
+     
     # HARDER ENEMIES #
 
     if (IsChecked $Redux.Enemy.Octorok)     { ChangeBytes -Offset "1BBCF82" -Values "4190"; ChangeBytes -Offset "1BBD2E6" -Values "0002"; ChangeBytes -Offset @("1BBD662", "1BBD96A") -Values "4450"; ChangeBytes -Offset "1BBD9E6" -Values "4500" }
@@ -112,28 +109,25 @@ function ByteOptions() {
     if (IsChecked $Redux.Enemy.Gohma)       { ChangeBytes -Offset "1BF96CA" -Values "0016"; ChangeBytes -Offset "1BFC3E6" -Values "0030"; ChangeBytes -Offset "1BFD46E" -Values "0020"; ChangeBytes -Offset "1BFD48E" -Values "000C" } 
     if (IsChecked $Redux.Enemy.KingDodongo) { ChangeBytes -Offset "1BF258A" -Values "4500"; ChangeBytes -Offset "1C0E7E2" -Values "427B"; ChangeBytes -Offset "1C0E7FE" -Values "0030"; ChangeBytes -Offset "1C0F214" -Values "41272727"; ChangeBytes -Offset "1BF59EE" -Values "0024"; ChangeBytes -Offset "1BF2C4A" -Values "0000" }
 
-
     # RECOVERY #
 
-    if (IsDefault $Redux.Recovery.Heart       -Not) { ChangeBytes -Offset   "AFD14E"              -Values (Get16Bit $Redux.Recovery.Heart.Text)       }
-    if (IsDefault $Redux.Recovery.Fairy       -Not) { ChangeBytes -Offset   "1BD5ACA"             -Values (Get16Bit $Redux.Recovery.Fairy.Text)       }
-    if (IsDefault $Redux.Recovery.FairyBottle -Not) { ChangeBytes -Offset   "1B85466"             -Values (Get16Bit $Redux.Recovery.FairyBottle.Text) }
-    if (IsDefault $Redux.Recovery.FairyRevive -Not) { ChangeBytes -Offset   "1B8F31E"             -Values (Get16Bit $Redux.Recovery.FairyRevive.Text) }
-    if (IsDefault $Redux.Recovery.Milk        -Not) { ChangeBytes -Offset   "1B8502A"             -Values (Get16Bit $Redux.Recovery.Milk.Text)        }
-    if (IsDefault $Redux.Recovery.RedPotion   -Not) { ChangeBytes -Offset   "1B84FFE"             -Values (Get16Bit $Redux.Recovery.RedPotion.Text)   }
-    if (IsDefault $Redux.Recovery.MagicJar1   -Not) { ChangeBytes -Offset   "AFD182"              -Values (Get16Bit $Redux.Recovery.MagicJar1.Text)   }
-    if (IsDefault $Redux.Recovery.MagicJar2   -Not) { ChangeBytes -Offset   "AFD1DA"              -Values (Get16Bit $Redux.Recovery.MagicJar2.Text)   }
-
+    if (IsDefault $Redux.Recovery.Heart       -Not) { ChangeBytes -Offset "AFD14E"  -Values (Get16Bit $Redux.Recovery.Heart.Text) }
+    if (IsDefault $Redux.Recovery.Fairy       -Not) { ChangeBytes -Offset "1BD5ACA" -Values (Get16Bit $Redux.Recovery.Fairy.Text) }
+    if (IsDefault $Redux.Recovery.FairyBottle -Not) { ChangeBytes -Offset "1B85466" -Values (Get16Bit $Redux.Recovery.FairyBottle.Text) }
+    if (IsDefault $Redux.Recovery.FairyRevive -Not) { ChangeBytes -Offset "1B8F31E" -Values (Get16Bit $Redux.Recovery.FairyRevive.Text) }
+    if (IsDefault $Redux.Recovery.Milk        -Not) { ChangeBytes -Offset "1B8502A" -Values (Get16Bit $Redux.Recovery.Milk.Text) }
+    if (IsDefault $Redux.Recovery.RedPotion   -Not) { ChangeBytes -Offset "1B84FFE" -Values (Get16Bit $Redux.Recovery.RedPotion.Text) }
+    if (IsDefault $Redux.Recovery.MagicJar1   -Not) { ChangeBytes -Offset "AFD182"  -Values (Get16Bit $Redux.Recovery.MagicJar1.Text) }
+    if (IsDefault $Redux.Recovery.MagicJar2   -Not) { ChangeBytes -Offset "AFD1DA"  -Values (Get16Bit $Redux.Recovery.MagicJar2.Text) }
 
     # MAGIC COSTS #
 
-    if (IsDefault $Redux.Magic.FireArrow  -Not) { ChangeBytes -Offset "1B9B864" -Values (Get8Bit $Redux.Magic.FireArrow.Text)  }
-    if (IsDefault $Redux.Magic.IceArrow   -Not) { ChangeBytes -Offset "1B9B865" -Values (Get8Bit $Redux.Magic.IceArrow.Text)   }
+    if (IsDefault $Redux.Magic.FireArrow  -Not) { ChangeBytes -Offset "1B9B864" -Values (Get8Bit $Redux.Magic.FireArrow.Text) }
+    if (IsDefault $Redux.Magic.IceArrow   -Not) { ChangeBytes -Offset "1B9B865" -Values (Get8Bit $Redux.Magic.IceArrow.Text) }
     if (IsDefault $Redux.Magic.LightArrow -Not) { ChangeBytes -Offset "1B9B866" -Values (Get8Bit $Redux.Magic.LightArrow.Text) }
-    if (IsDefault $Redux.Magic.Burst 	  -Not) { ChangeBytes -Offset "1B9B875" -Values (Get8Bit $Redux.Magic.Burst.Text) 	   }    
-    if (IsDefault $Redux.Magic.Teleport   -Not) { ChangeBytes -Offset "1B9B873" -Values (Get8Bit $Redux.Magic.Teleport.Text)   }
-    if (IsDefault $Redux.Magic.Barrier 	  -Not) { ChangeBytes -Offset "1B9B874" -Values (Get8Bit $Redux.Magic.Barrier.Text)    }
-
+    if (IsDefault $Redux.Magic.Burst 	  -Not) { ChangeBytes -Offset "1B9B875" -Values (Get8Bit $Redux.Magic.Burst.Text) }    
+    if (IsDefault $Redux.Magic.Teleport   -Not) { ChangeBytes -Offset "1B9B873" -Values (Get8Bit $Redux.Magic.Teleport.Text) }
+    if (IsDefault $Redux.Magic.Barrier 	  -Not) { ChangeBytes -Offset "1B9B874" -Values (Get8Bit $Redux.Magic.Barrier.Text) }
 
     # EQUIPMENT COLORS #
 
@@ -145,7 +139,6 @@ function ByteOptions() {
         if (IsColor $Redux.Colors.SetEquipment[4] -Not) { ChangeBytes -Offset "B9D1B7" -Values @($Redux.Colors.SetEquipment[4].Color.R, $Redux.Colors.SetEquipment[4].Color.G, $Redux.Colors.SetEquipment[4].Color.B) } # Golden Gauntlets
     }
 
-
     # MAGIC SPIN EFFECTS #
 
     if ($Redux.Colors.SetSpinAttack -ne $null) {
@@ -154,7 +147,6 @@ function ByteOptions() {
         if (IsColor $Redux.Colors.SetSpinAttack[2] -Not) { ChangeBytes -Offset "1F02B94" -Values @($Redux.Colors.SetSpinAttack[2].Color.R, $Redux.Colors.SetSpinAttack[2].Color.G, $Redux.Colors.SetSpinAttack[2].Color.B) } # Red Spin Attack
         if (IsColor $Redux.Colors.SetSpinAttack[3] -Not) { ChangeBytes -Offset "1F02CB4" -Values @($Redux.Colors.SetSpinAttack[3].Color.R, $Redux.Colors.SetSpinAttack[3].Color.G, $Redux.Colors.SetSpinAttack[3].Color.B) } # Red Spin Attack
     }
-
 
     # TRAIL EFFECTS #
 
@@ -169,11 +161,28 @@ function ByteOptions() {
 	    elseif (IsText -Elem $Redux.Colors.Alpha -Compare "Full Tip & Base") { ChangeBytes -Offset "1B9A97F" -Values "FF"; ChangeBytes -Offset "1B9A983" -Values "FF" }
     }
 
+    # AMMO #
+
+    if (IsDefault $Redux.Replenish.DekuStick    -Not) { ChangeBytes -Offset "AFC91F" -Values (Get8Bit $Redux.Replenish.DekuStick.Text) }
+    if (IsDefault $Redux.Replenish.DekuNut_Bomb -Not) { ChangeBytes -Offset "B9CC29" -Values (Get8Bit $Redux.Replenish.DekuNut_Bomb.Text) }
+    if (IsDefault $Redux.Replenish.DekuSeed     -Not) { ChangeBytes -Offset "AFCEEB" -Values (Get8Bit $Redux.Replenish.DekuSeed.Text) }
+    if (IsDefault $Redux.Replenish.Arrows1      -Not) { ChangeBytes -Offset "B9CC31" -Values (Get8Bit $Redux.Replenish.Arrows1.Text) }
+    if (IsDefault $Redux.Replenish.Arrows2      -Not) { ChangeBytes -Offset "B9CC33" -Values (Get8Bit $Redux.Replenish.Arrows2.Text) }
+    if (IsDefault $Redux.Replenish.Arrows3      -Not) { ChangeBytes -Offset "B9CC35" -Values (Get8Bit $Redux.Replenish.Arrows3.Text) }
+
+    # MONEY #
+
+    if (IsDefault $Redux.Currency.Rupee1 -Not) { ChangeBytes -Offset "B9CC3C"  -Values (Get16Bit $Redux.Currency.Rupee1.Text) }
+    if (IsDefault $Redux.Currency.Rupee2 -Not) { ChangeBytes -Offset "B9CC3E"  -Values (Get16Bit $Redux.Currency.Rupee2.Text) }
+    if (IsDefault $Redux.Currency.Rupee3 -Not) { ChangeBytes -Offset "B9CC40"  -Values (Get16Bit $Redux.Currency.Rupee3.Text) }
+    if (IsDefault $Redux.Currency.Rupee4 -Not) { ChangeBytes -Offset "B9CC42"  -Values (Get16Bit $Redux.Currency.Rupee4.Text) }
+    if (IsDefault $Redux.Currency.Rupee5 -Not) { ChangeBytes -Offset "B9CC44"  -Values (Get16Bit $Redux.Currency.Rupee5.Text) }
+    if (IsDefault $Redux.Currency.Rupee6 -Not) { ChangeBytes -Offset "1DD31CA" -Values (Get16Bit $Redux.Currency.Rupee6.Text) }
 
     # EQUIPMENT #
 
     if (IsDefault $Redux.Equipment.SwordHealth -Not) {
-        $value =  (Get8Bit $Redux.Equipment.SwordHealth.Text)
+        $value = (Get8Bit $Redux.Equipment.SwordHealth.Text)
         ChangeBytes -Offset "AFC1AB" -Values $value
     }
 
@@ -192,14 +201,12 @@ function ByteOptions() {
 }
 
 
-
 #==============================================================================================================================================================================================
 function CreateOptions() {
     
-    CreateOptionsPanel -Tabs @("Main", "Audio", "Difficulty", "Colors", "Equipment")
+    CreateOptionsPanel -Tabs @("Main", "Difficulty", "Colors", "Quantity", "Equipment")
     ChangeModelsSelection
 }
-
 
 
 #==============================================================================================================================================================================================
@@ -207,30 +214,25 @@ function CreateTabMain() {
 
     # MISC #
     
+    $note1 = "May possibly cause sequence breaking!"
+
     CreateReduxGroup    -Tag  "Gameplay"          -Text "Misc" 
-    CreateReduxCheckBox -Name "NoKillFlash"       -Text "No Kill Flash"               -Info "Disable the flashing effect when killing certain enemies like walltula etc."                                               -Credits "Chez Cousteau & Anthrogi (ported))"
-    CreateReduxCheckBox -Name "InstantClaimCheck" -Text "Instant Claim Check"         -Info "Allows you to use the claim check immediately to get the biggoron's sword."                                                -Credits "Randomizer & Anthrogi (ported)"
-    CreateReduxCheckBox -Name "BlackBars"         -Text "No Black Bars (Z-Targeting)" -Info "Removes the black bars shown on the top & bottom of the screen during Z-targeting."                                        -Credits "Admentus & Anthrogi (ported)"
-    CreateReduxCheckBox -Name "TextSpeed"         -Text "2x Text Speed"               -Info "Makes text go 2x as fast."                                                                                                 -Credits "Admentus & Anthrogi (ported)"
-    CreateReduxCheckbox -Name "FastRang" 	      -Text "Quicker Boomerang" 	      -Info "Boomerang flys faster and returns quicker while the return timer is reduced to approximate the original distance."         -Credits "Anthrogi"
-    CreateReduxCheckBox -Name "FastArrows"        -Text "Less Magic Arrows Cooldown"  -Info "The burst animation for Fire, Ice and Light Arrows are shorter.`nAllows Link to shoot the next magic arrow a bit quicker." -Credits "Anthrogi"
-    CreateReduxCheckBox -Name "FastCharge" 	      -Text "Faster Lv2 Magic Spin"       -Info "Allows you to perform the lv2 magic spin attack quicker during charge."                                                    -Credits "Anthrogi"
-    CreateReduxCheckbox -Name "FastRoll" 	      -Text "Increased Rolling Distance"  -Info "You'll move further upon rolling."                                                                                         -Credits "Anthrogi" -Warning "May possibly cause sequence breaking!"
-    CreateReduxCheckbox -Name "FastZTargetMove"   -Text "Faster Lock-On Movement"     -Info "You'll move faster when targeting something."                                                                              -Credits "Anthrogi" -Warning "May possibly cause sequence breaking!"
-}
-
-
-
-#==============================================================================================================================================================================================
-function CreateTabAudio() {
+    CreateReduxCheckBox -Name "NoKillFlash"       -Text "No Kill Flash"               -Info "Disable the flashing effect when killing certain enemies like walltula etc."                                                                                                           -Credits "Chez Cousteau & Anthrogi (ported))"
+    CreateReduxCheckBox -Name "InstantClaimCheck" -Text "Instant Claim Check"         -Info "Allows you to use the claim check immediately to get the biggoron's sword."                                                                                                            -Credits "Randomizer & Anthrogi (ported)"
+    CreateReduxCheckBox -Name "BlackBars"         -Text "No Black Bars (Z-Targeting)" -Info "Removes the black bars shown on the top & bottom of the screen during Z-targeting."                                                                                                    -Credits "Admentus & Anthrogi (ported)"
+    CreateReduxCheckBox -Name "TextSpeed"         -Text "2x Text Speed"               -Info "Makes text go 2x as fast."                                                                                                                                                             -Credits "Admentus & Anthrogi (ported)"
+    CreateReduxCheckbox -Name "FastRang" 	      -Text "Quicker Boomerang" 	      -Info "Boomerang flys faster and returns quicker while the return timer is reduced to approximate the original distance."                                                                     -Credits "Anthrogi"
+    CreateReduxCheckBox -Name "FastBullets"       -Text "Better Projectile Shots"     -Info "Deku Seeds and Arrows travel faster when shot, along with the burst animation for Fire, Ice and Light Arrows being shorter.`nAllows Link to shoot the next magic arrow a bit quicker." -Credits "Anthrogi"
+    CreateReduxCheckBox -Name "FastCharge" 	      -Text "Faster Lv2 Magic Spin"       -Info "Allows you to perform the lv2 magic spin attack quicker during charge."                                                                                                                -Credits "Anthrogi"
+    CreateReduxCheckbox -Name "FastRoll" 	      -Text "Increased Rolling Distance"  -Info "You'll move further upon rolling."                                                                                                                                                     -Credits "Anthrogi" $note1
+    CreateReduxCheckbox -Name "FastZTargetMove"   -Text "Faster Lock-On Movement"     -Info "You'll move faster when targeting something."                                                                                                                                          -Credits "Anthrogi" $note1
     
     # SOUNDS / VOICES #
 
-    CreateReduxGroup    -Tag  "Sounds"             -Text "Sounds/Voices"
-    CreateReduxComboBox -Name "ChildVoices" -Child -Text "Child Voice" -Default "Original" -Items @("Original") -FilePath ($GameFiles.binaries + "\Voices Child") -Info "Replace the voice used for the Young Player Model." -Credits "`nMajora's Mask: Korey Cryderman (ported) & GhostlyDark (corrected)`nMelee Zelda: Mickey Saeed & theluigidude2007 (edits)`nAmara: Amara (ripping) & theluigidude2007 (edits)"
-    CreateReduxComboBox -Name "AdultVoices" -Adult -Text "Adult Voice" -Default "Original" -Items @("Original") -FilePath ($GameFiles.binaries + "\Voices Adult") -Info "Replace the voice used for the Adult Player Model." -Credits "`nMajora's Mask: Korey Cryderman (ported) & GhostlyDark (corrected)`nMelee Zelda: Mickey Saeed & theluigidude2007 (edits)`nAmara: Amara (ripping) & theluigidude2007`nPeach: theluigidude2007"
+    CreateReduxGroup    -Tag  "Sounds"      -Text "Sounds/Voices"
+    CreateReduxComboBox -Name "ChildVoices" -Text "Child Voice" -Default "Original" -Items @("Original") -FilePath ($GameFiles.binaries + "\Voices Child") -Info "Replace the voice used for the Young Player Model." -Credits "`nMajora's Mask: Korey Cryderman (ported) & GhostlyDark (corrected)`nMelee Zelda: Mickey Saeed & theluigidude2007 (edits)`nAmara: Amara (ripping) & theluigidude2007 (edits)"
+    CreateReduxComboBox -Name "AdultVoices" -Text "Adult Voice" -Default "Original" -Items @("Original") -FilePath ($GameFiles.binaries + "\Voices Adult") -Info "Replace the voice used for the Adult Player Model." -Credits "`nMajora's Mask: Korey Cryderman (ported) & GhostlyDark (corrected)`nMelee Zelda: Mickey Saeed & theluigidude2007 (edits)`nAmara: Amara (ripping) & theluigidude2007`nPeach: theluigidude2007"
 }
-
 
 
 #==============================================================================================================================================================================================
@@ -243,13 +245,12 @@ function CreateTabDifficulty() {
     $items3 = @("1 Boss HP", "0.5x Boss HP", "1x Boss HP", "1.5x Boss HP", "2x Boss HP", "2.5x Boss HP", "3x Boss HP", "3.5x Boss HP", "4x Boss HP", "5x Boss HP")
 
     CreateReduxGroup    -Tag  "Hero"           -Text "Hero Mode"
-    CreateReduxComboBox -Name "MonsterHP"      -Text "Monster HP"   -Items $items1 -Default 3                                                        -Info "Set the amount of health for monsters.`nDoesn't include monsters which die in one hit."            -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "MiniBossHP"     -Text "Mini-Boss HP" -Items $items2 -Default 3                                                        -Info "Set the amount of health for mini-bosses.`nSome enemies are not included due to issues."           -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "BossHP"         -Text "Boss HP"      -Items $items3 -Default 3                                                        -Info "Set the amount of health for bosses.`nPhantom Ganon, Ganondorf and Ganon have a max of 3x health." -Credits "Admentus, Marcelo20XX (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "Damage"         -Text "Damage"       -Items @("1x Damage", "2x Damage", "4x Damage", "8x Damage")                     -Info "Set the amount of damage you'll receive."                                                          -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "MagicUsage"     -Text "Magic Usage"  -Items @("1x Magic Usage", "2x Magic Usage", "4x Magic Usage", "8x Magic Usage") -Info "Set the multiplier rate the magic is consumed at."                                                 -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxCheckBox -Name "NoBottledFairy" -Text "No Bottled Fairies"                                                                            -Info "Fairies can no longer be bottled, you'll have to buy them to store them."                          -Credits "Admentus (original) & Anthrogi (ported)"
-
+    CreateReduxComboBox -Name "MonsterHP"      -Text "Monster HP"   -Default 3 -Items $items1                                                                   -Info "Set the amount of health for monsters.`nDoesn't include monsters which die in one hit."  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "MiniBossHP"     -Text "Mini-Boss HP" -Default 3 -Items $items2                                                                   -Info "Set the amount of health for mini-bosses.`nSome enemies are not included due to issues." -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "BossHP"         -Text "Boss HP"      -Default 3 -Items $items3                                                                   -Info "Set the amount of health for bosses.`nSome have a max health cap."                       -Credits "Admentus, Marcelo20XX (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "Damage"         -Text "Damage"       -Default 1 -Items @("1x Damage", "2x Damage", "4x Damage", "8x Damage")                     -Info "Set the amount of damage you'll receive."                                                -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "MagicUsage"     -Text "Magic Usage"  -Default 1 -Items @("1x Magic Usage", "2x Magic Usage", "4x Magic Usage", "8x Magic Usage") -Info "Set the multiplier rate the magic is consumed at."                                       -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxCheckBox -Name "NoBottledFairy" -Text "No Bottled Fairies"                                                                                       -Info "Fairies can no longer be bottled, you'll have to buy them to store them."                -Credits "Admentus (original) & Anthrogi (ported)"
 
     # HARDER ENEMIES #
 
@@ -274,18 +275,17 @@ function CreateTabDifficulty() {
     CreateReduxCheckBox -Name "Gohma"       -Text "Gohma"             -Info "Gohma recovers faster from being stunned."                                                                                                                                                                   -Credits "Euler & Anthrogi (also ported)"
     CreateReduxCheckBox -Name "KingDodongo" -Text "King Dodongo"      -Info "King Dodongo inhales faster and recovers from stun immediately along with shooting fireballs faster and for longer with increased size."                                                                     -Credits "Admentus, Euler & Anthrogi (also ported)"
 
-
     # RECOVERY #
 
     CreateReduxGroup   -Tag  "Recovery"    -Text "Recovery" -Height 4
-    CreateReduxTextBox -Name "Heart"       -Text "Recovery Heart"    -Value 16  -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that Recovery Hearts will restore."                    -Credits "Admentus, Three Pendants (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Fairy"       -Text "Fairy"             -Value 128 -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that a Fairy will restore."                            -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "FairyBottle" -Text "Fairy (Bottle)"    -Value 320 -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that a Bottled Fairy will restore."                    -Credits "Admentus, Three Pendants & Anthrogi (ported)"
-    CreateReduxTextBox -Name "FairyRevive" -Text "Fairy (Revive)"    -Value 320 -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that a Bottled Fairy will restore after Link is KO'd." -Credits "Admentus, Three Pendants & Anthrogi (ported)"; $Last.Row++
-    CreateReduxTextBox -Name "Milk"        -Text "Milk"              -Value 80  -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that the Milk will restore."                           -Credits "Admentus, Three Pendants & Anthrogi (ported)"
-    CreateReduxTextBox -Name "RedPotion"   -Text "Red Potion"        -Value 320 -Min 0 -Max 320 -Length 3 -Info "Set the amount of health that a Red Potion will restore."                       -Credits "Admentus, Three Pendants (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "MagicJar1"   -Text "Magic Jar (Small)" -Value 12  -Min 0 -Max 96  -Length 2 -Info "Set the amount of magic that Small Magic Jars will restore."                    -Credits "Anthrogi"
-    CreateReduxTextBox -Name "MagicJar2"   -Text "Magic Jar (Big)"   -Value 24  -Min 0 -Max 96  -Length 2 -Info "Set the amount of magic that Big Magic Jars will restore."                      -Credits "Anthrogi"
+    CreateReduxTextBox -Name "Heart"       -Text "Heart"             -Value 16  -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that Hearts will restore."                             -Credits "Admentus, Three Pendants (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Fairy"       -Text "Fairy"             -Value 128 -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that a Fairy will restore."                            -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "FairyBottle" -Text "Fairy (Bottle)"    -Value 320 -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that a Bottled Fairy will restore."                    -Credits "Admentus, Three Pendants & Anthrogi (ported)"
+    CreateReduxTextBox -Name "FairyRevive" -Text "Fairy (Revive)"    -Value 320 -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that a Bottled Fairy will restore after Link is KO'd." -Credits "Admentus, Three Pendants & Anthrogi (ported)"; $Last.Row++
+    CreateReduxTextBox -Name "Milk"        -Text "Milk"              -Value 80  -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that the Milk will restore."                           -Credits "Admentus, Three Pendants & Anthrogi (ported)"
+    CreateReduxTextBox -Name "RedPotion"   -Text "Red Potion"        -Value 320 -Min 1 -Max 320 -Length 3 -Info "Set the amount of health that a Red Potion will restore."                       -Credits "Admentus, Three Pendants (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "MagicJar1"   -Text "Magic Jar (Small)" -Value 12  -Min 2 -Max 96  -Length 2 -Info "Set the amount of magic that Small Magic Jars will restore."                    -Credits "Anthrogi"
+    CreateReduxTextBox -Name "MagicJar2"   -Text "Magic Jar (Big)"   -Value 24  -Min 2 -Max 96  -Length 2 -Info "Set the amount of magic that Big Magic Jars will restore."                      -Credits "Anthrogi"
 
     $Redux.Recovery.HeartLabel       = CreateLabel -X $Redux.Recovery.Heart.Left       -Y ($Redux.Recovery.Heart.Bottom       + (DPISize 6)) -Text ("(" + [math]::Round($Redux.Recovery.Heart.text/16,       1) + " Hearts)") -AddTo $Last.Group
     $Redux.Recovery.FairyLabel       = CreateLabel -X $Redux.Recovery.Fairy.Left       -Y ($Redux.Recovery.Fairy.Bottom       + (DPISize 6)) -Text ("(" + [math]::Round($Redux.Recovery.Fairy.text/16,       1) + " Hearts)") -AddTo $Last.Group
@@ -300,18 +300,16 @@ function CreateTabDifficulty() {
     $Redux.Recovery.Milk.Add_TextChanged(        { if ($this.text -eq "16") { $Redux.Recovery.MilkLabel.Text        = "(1 Heart)" } else { $Redux.Recovery.MilkLabel.Text        = "(" + [math]::Round($this.text/16, 1) + " Hearts)" } } )
     $Redux.Recovery.RedPotion.Add_TextChanged(   { if ($this.text -eq "16") { $Redux.Recovery.RedPotionLabel.Text   = "(1 Heart)" } else { $Redux.Recovery.RedPotionLabel.Text   = "(" + [math]::Round($this.text/16, 1) + " Hearts)" } } )
 
-
     # MAGIC COSTS #
 
-    CreateReduxGroup   -Tag  "Magic"       -Text "Magic Costs"
-    CreateReduxTextBox -Name "FireArrow"   -Text "Fire Arrow"    -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Fire Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."   -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "IceArrow"    -Text "Ice Arrow"     -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Ice Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."    -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "LightArrow"  -Text "Light Arrow"   -Value 8  -Min 2 -Max 96 -Info "Set the magic cost for using Light Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."  -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Burst"  	   -Text "Din's Fire"    -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Din's Fire.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."    -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Teleport"    -Text "Farore's Wind" -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Farore's Wind.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter." -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Barrier"     -Text "Nayru's Love"  -Value 24 -Min 2 -Max 96 -Info "Set the magic cost for using Nayru's Love.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxGroup   -Tag  "Magic"      -Text "Magic Costs"
+    CreateReduxTextBox -Name "FireArrow"  -Text "Fire Arrow"    -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Fire Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."   -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "IceArrow"   -Text "Ice Arrow"     -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Ice Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."    -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "LightArrow" -Text "Light Arrow"   -Value 8  -Min 2 -Max 96 -Info "Set the magic cost for using Light Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Burst"  	  -Text "Din's Fire"    -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Din's Fire.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."    -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Teleport"   -Text "Farore's Wind" -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Farore's Wind.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter." -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Barrier"    -Text "Nayru's Love"  -Value 24 -Min 2 -Max 96 -Info "Set the magic cost for using Nayru's Love.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."  -Credits "Admentus (original) & Anthrogi (ported)"
 }
-
 
 
 #==============================================================================================================================================================================================
@@ -328,9 +326,9 @@ function CreateTabColors() {
     $Redux.Colors.Equipment += CreateReduxComboBox -Name "KokiriTunic"     -Text "Kokiri Tunic"     -Default 1 -Length 230 -Items $items1 -PostItems $postItems -FilePath $Files -Info ("Select a color scheme for the Kokiri Tunic.`n" + $Randomize) -Credits "Randomizer"
     $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Kokiri Tunic" -Info "Select the color you want for the Kokiri Tunic." -Credits "Randomizer"
     $Redux.Colors.Equipment += CreateReduxComboBox -Name "GoronTunic"      -Text "Goron Tunic"      -Default 2 -Length 230 -Items $items1 -PostItems $postItems -FilePath $Files -Info ("Select a color scheme for the Goron Tunic.`n"  + $Randomize) -Credits "Randomizer"
-    $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Goron Tunic"      -Info "Select the color you want for the Goron Tunic." -Credits "Randomizer"
+    $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Goron Tunic"  -Info "Select the color you want for the Goron Tunic."  -Credits "Randomizer"
     $Redux.Colors.Equipment += CreateReduxComboBox -Name "ZoraTunic"       -Text "Zora Tunic"       -Default 3 -Length 230 -Items $items1 -PostItems $postItems -FilePath $Files -Info ("Select a color scheme for the Zora Tunic.`n"  + $Randomize) -Credits "Randomizer"
-    $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Zora Tunic"       -Info "Select the color you want for the Zora Tunic." -Credits "Randomizer"
+    $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Zora Tunic"   -Info "Select the color you want for the Zora Tunic."   -Credits "Randomizer"
     $Redux.Colors.Equipment += CreateReduxComboBox -Name "SilverGauntlets" -Text "Silver Gauntlets" -Default 1 -Length 230 -Items $Items2 -Info ("Select a color scheme for the Silver Gauntlets.`n" + $Randomize) -Credits "Randomizer"
     $Buttons += CreateReduxButton -Tag $Buttons.Count -Text "Silver Gaunlets"  -Info "Select the color you want for the Silver Gauntlets." -Credits "Randomizer"
     $Redux.Colors.Equipment += CreateReduxComboBox -Name "GoldenGauntlets" -Text "Golden Gauntlets" -Default 2 -Length 230 -Items $Items2 -Info ("Select a color scheme for the Golden Gauntlets.`n" + $Randomize) -Credits "Randomizer"
@@ -366,7 +364,6 @@ function CreateTabColors() {
         SetGauntletsColorsPreset         -ComboBox $Redux.Colors.Equipment[4] -Dialog $Redux.Colors.SetEquipment[4] -Label $Redux.Colors.EquipmentLabels[4]
     }
 
-
     # COLORS #
 
     CreateSpinAttackColorOptions
@@ -374,25 +371,50 @@ function CreateTabColors() {
 }
 
 
+#==============================================================================================================================================================================================
+function CreateTabQuantity() {
+
+    # AMMO #
+
+    CreateReduxGroup   -Tag  "Replenish"    -Text "Ammo"
+    CreateReduxTextBox -Name "DekuStick"    -Text "Deku Sticks"     -Value 1   -Min 1 -Max 30  -Info "Set the amount gained for picking up a Deku Stick."       -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "DekuNut_Bomb" -Text "Deku_Nuts/Bombs" -Value 5   -Min 1 -Max 40  -Info "Set the amount gained for picking up Deku Nuts or Bombs." -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "DekuSeed"     -Text "Deku Seeds"      -Value 5   -Min 1 -Max 50  -Info "Set the amount gained for picking up Deku Seed Bullets."  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Arrows1"      -Text "Arrow Type 1"    -Value 5   -Min 1 -Max 50  -Info "Set the amount gained for picking up Single Arrows."      -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Arrows2"      -Text "Arrow Type 2"    -Value 10  -Min 1 -Max 50  -Info "Set the amount gained for picking up Double Arrows."      -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Arrows3"      -Text "Arrow Type 3"    -Value 30  -Min 1 -Max 50  -Info "Set the amount gained for picking up Triple Arrows."      -Credits "Admentus (original) & Anthrogi (ported)"
+    
+    # MONEY #
+
+    CreateReduxGroup   -Tag  "Currency"         -Text "Money"
+    CreateReduxTextBox -Name "Rupee1" -Length 3 -Text "Rupee (Green)"       -Value 1   -Min 1 -Max 500 -Info "Set the amount gained for picking up Green Rupees."          -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Rupee2" -Length 3 -Text "Rupee (Blue)"        -Value 3   -Min 1 -Max 500 -Info "Set the amount gained for picking up Blue Rupees."           -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Rupee3" -Length 3 -Text "Rupee (Red)"         -Value 15  -Min 1 -Max 500 -Info "Set the amount gained for picking up Red Rupees."            -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Rupee4" -Length 3 -Text "Rupee (Purple)"      -Value 50  -Min 1 -Max 500 -Info "Set the amount gained for picking up Purple Rupees."         -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Rupee5" -Length 3 -Text "Rupee (Orange/Gold)" -Value 200 -Min 1 -Max 500 -Info "Set the amount gained for picking up Orange or Gold Rupees." -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Rupee6" -Length 3 -Text "Rupee (Silver)"      -Value 5   -Min 1 -Max 500 -Info "Set the amount gained for picking up Silver Rupees."         -Credits "Admentus (original) & Anthrogi (ported)"
+}
+
 
 #==============================================================================================================================================================================================
 function CreateTabEquipment() {
     
     # EQUIPMENT #
 
-    CreateReduxGroup    -Tag  "Equipment"    -Text "Equipment Adjustments"
-    CreateReduxTextBox  -Name "SwordHealth"  -Text "Sword Durability" -Length 3 -Value 8 -Min 1 -Max 255                              -Info "Set the amount of hits the Giant's Knife can take before it breaks."                                                                        -Credits "Admentus (original) & Anthrogi (ported)" 
-    CreateReduxComboBox -Name "ShieldRecoil" -Text "Shield Recoil"  -Items @("None", "Little", "Normal", "Big", "Huge")               -Info "Choose the pushback rate when getting hit while shielding."                                                                                 -Credits "Admentus (ROM & original), Aegiker (RAM & original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Sword1"       -Text "Sword 1"        -Default 3000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Kokiri Sword."                                                                                                 -Credits "Admentus (original) & Anthrogi (ported)" 
-    CreateReduxSlider   -Name "Sword2"       -Text "Sword 2"        -Default 4000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Master Sword."                                                                                                 -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Sword3"       -Text "Sword 3"        -Default 5500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Giant's_Knife/Biggoron_Sword."                                                                                 -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Sword 3" -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Broken Giant's Knife."                                                                                         -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Stick"        -Text "Stick"          -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Deku Stick.`nNOTE: Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!" -Credits "Anthrogi"
-    CreateReduxSlider   -Name "Hammer"       -Text "Hammer"         -Default 2500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Megaton Hammer."                                                                                               -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"       -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" -Warning "Going above the default length by a certain amount can look weird."
-    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"       -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" -Warning "Going above the default length by a certain amount can look weird."
-}
+    $note2 = "Going above the default length by a certain amount can look weird."
 
+    CreateReduxGroup    -Tag  "Equipment"    -Text "Equipment Adjustments"
+    CreateReduxTextBox  -Name "SwordHealth"  -Text "Sword Durability" -Length 3 -Value 8 -Min 1 -Max 255                                -Info "Set the amount of hits the Giant's Knife can take before it breaks."                                                                        -Credits "Admentus (original) & Anthrogi (ported)" 
+    CreateReduxComboBox -Name "ShieldRecoil" -Text "Shield Recoil"    -Default 3 -Items @("None", "Little", "Normal", "Big", "Huge")    -Info "Choose the pushback rate when getting hit while shielding."                                                                                 -Credits "Admentus (ROM & original), Aegiker (RAM & original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Sword1"       -Text "Sword 1"          -Default 3000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Kokiri Sword."                                                                                                 -Credits "Admentus (original) & Anthrogi (ported)" 
+    CreateReduxSlider   -Name "Sword2"       -Text "Sword 2"          -Default 4000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Master Sword."                                                                                                 -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Sword3"       -Text "Sword 3"          -Default 5500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Giant's_Knife/Biggoron_Sword."                                                                                 -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Sword 3"   -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Broken Giant's Knife."                                                                                         -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Stick"        -Text "Stick"            -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Deku Stick.`nNOTE: Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!" -Credits "Anthrogi"
+    CreateReduxSlider   -Name "Hammer"       -Text "Hammer"           -Default 2500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Megaton Hammer."                                                                                               -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"         -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" $note2
+    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"         -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" $note2
+}
 
 
 #==============================================================================================================================================================================================
@@ -400,17 +422,16 @@ function CreateAttackTrailColorOptions() {
     
     $randomize = "`n" + '"Randomized" fully randomizes the colors each time the patcher is opened'
     $buttons   = $Redux.Colors.SetAttackTrail = $Redux.Colors.AttackTrailLabels = @()
-    if ($GameType.mode -eq "Ocarina of Time" ) { $credits = "Ported from Rando" } else { $credits = "Admentus" }
 
     CreateReduxGroup    -Tag  "Colors"                -Text "Trail Effects"
-    CreateReduxComboBox -Name "AttackTrail"           -Text "Attack Color"       -Items @("White", "Black", "Red", "Green", "Blue", "Cyan", "Magenta", "Gray", "Randomized", "Custom") -Default 1 -Info ("Select a preset for the attack trail color.")                      -Credits "Ported from Rando"
-    $buttons += CreateReduxButton -Tag $Buttons.Count -Text "Trail (Tip)"                                                                                                                         -Info "Select the tip color you want for the attack trail."                -Credits "Ported from Rando"
-    $buttons += CreateReduxButton -Tag $Buttons.Count -Text "Trail (Base)"                                                                                                                        -Info "Select the base color you want for the attack trail."               -Credits "Ported from Rando"
-    CreateReduxComboBox -Name "Duration1"             -Text "Attack Duration"    -Items @("Disabled", "Default", "Long", "Longer", "Lightsaber") -Default 2                                       -Info "Select the attack trail duration."                                  -Credits $credits
-    CreateReduxComboBox -Name "Duration2"             -Text "Bommerang Duration" -Items @("Disabled", "Default", "Longer", "Longest") -Default 2                                                  -Info "Select the boomerang trail duration."                               -Credits "Anthrogi"
-    CreateReduxComboBox -Name "Alpha"                 -Text "Attack Alpha Style" -Items @("Default", "Low Tip & Full Base", "Full Tip & Base")                                                    -Info "Select the attack trail transparent style you want when attacking." -Credits "Anthrogi"
+    CreateReduxComboBox -Name "AttackTrail"           -Text "Attack Color"       -Default 1 -Items @("White", "Black", "Red", "Green", "Blue", "Cyan", "Magenta", "Gray", "Randomized", "Custom") -Info ("Select a preset for the attack trail color.")                      -Credits "Rando Team (original) & Anthrogi (ported)"
+    $buttons += CreateReduxButton -Tag $Buttons.Count -Text "Trail (Tip)"                                                                                                                         -Info "Select the tip color you want for the attack trail."                -Credits "Rando Team (original) & Anthrogi (ported)"
+    $buttons += CreateReduxButton -Tag $Buttons.Count -Text "Trail (Base)"                                                                                                                        -Info "Select the base color you want for the attack trail."               -Credits "Rando Team (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "Duration1"             -Text "Attack Duration"    -Default 2 -Items @("Disabled", "Default", "Long", "Longer", "Lightsaber")                                       -Info "Select the attack trail duration."                                  -Credits "Rando Team (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "Duration2"             -Text "Bommerang Duration" -Default 2 -Items @("Disabled", "Default", "Longer", "Longest")                                                  -Info "Select the boomerang trail duration."                               -Credits "Anthrogi"
+    CreateReduxComboBox -Name "Alpha"                 -Text "Attack Alpha Style" -Default 1 -Items @("Default", "Low Tip & Full Base", "Full Tip & Base")                                         -Info "Select the attack trail transparent style you want when attacking." -Credits "Anthrogi"
 
-    $Redux.Colors.SetAttackTrail += CreateColorDialog -Color "FFFFFF" -Name "SetTipTrail" -IsGame -Button $Buttons[0]
+    $Redux.Colors.SetAttackTrail += CreateColorDialog -Color "FFFFFF" -Name "SetTipTrail"  -IsGame -Button $Buttons[0]
     $Redux.Colors.SetAttackTrail += CreateColorDialog -Color "FFFFFF" -Name "SetBaseTrail" -IsGame -Button $Buttons[1]
 
     for ($i=0; $i -lt $Buttons.length; $i++) {
