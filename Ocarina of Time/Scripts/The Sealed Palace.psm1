@@ -214,7 +214,7 @@ function CreateTabMain() {
 
     # MISC #
     
-    $note1 = "May possibly cause sequence breaking!"
+    $note = "May possibly cause sequence breaking!"
 
     CreateReduxGroup    -Tag  "Gameplay"          -Text "Misc" 
     CreateReduxCheckBox -Name "NoKillFlash"       -Text "No Kill Flash"               -Info "Disable the flashing effect when killing certain enemies like walltula etc."                                                                                                           -Credits "Chez Cousteau & Anthrogi (ported))"
@@ -224,8 +224,8 @@ function CreateTabMain() {
     CreateReduxCheckbox -Name "FastRang" 	      -Text "Quicker Boomerang" 	      -Info "Boomerang flys faster and returns quicker while the return timer is reduced to approximate the original distance."                                                                     -Credits "Anthrogi"
     CreateReduxCheckBox -Name "FastBullets"       -Text "Better Projectile Shots"     -Info "Deku Seeds and Arrows travel faster when shot, along with the burst animation for Fire, Ice and Light Arrows being shorter.`nAllows Link to shoot the next magic arrow a bit quicker." -Credits "Anthrogi"
     CreateReduxCheckBox -Name "FastCharge" 	      -Text "Faster Lv2 Magic Spin"       -Info "Allows you to perform the lv2 magic spin attack quicker during charge."                                                                                                                -Credits "Anthrogi"
-    CreateReduxCheckbox -Name "FastRoll" 	      -Text "Increased Rolling Distance"  -Info "You'll move further upon rolling."                                                                                                                                                     -Credits "Anthrogi" -Warning $note1
-    CreateReduxCheckbox -Name "FastZTargetMove"   -Text "Faster Lock-On Movement"     -Info "You'll move faster when targeting something."                                                                                                                                          -Credits "Anthrogi" -Warning $note1
+    CreateReduxCheckbox -Name "FastRoll" 	      -Text "Increased Rolling Distance"  -Info "You'll move further upon rolling."                                                                                                                                                     -Credits "Anthrogi" -Warning $note
+    CreateReduxCheckbox -Name "FastZTargetMove"   -Text "Faster Lock-On Movement"     -Info "You'll move faster when targeting something."                                                                                                                                          -Credits "Anthrogi" -Warning $note
     
     # SOUNDS / VOICES #
 
@@ -401,8 +401,6 @@ function CreateTabEquipment() {
     
     # EQUIPMENT #
 
-    $note2 = "Going above the default length by a certain amount can look weird."
-
     CreateReduxGroup    -Tag  "Equipment"    -Text "Equipment Adjustments"
     CreateReduxTextBox  -Name "SwordHealth"  -Text "Sword Durability" -Length 3 -Value 8 -Min 1 -Max 255                                -Info "Set the amount of hits the Giant's Knife can take before it breaks."                                                                        -Credits "Admentus (original) & Anthrogi (ported)" 
     CreateReduxComboBox -Name "ShieldRecoil" -Text "Shield Recoil"    -Default 3 -Items @("None", "Little", "Normal", "Big", "Huge")    -Info "Choose the pushback rate when getting hit while shielding."                                                                                 -Credits "Admentus (ROM & original), Aegiker (RAM & original) & Anthrogi (ported)"
@@ -412,8 +410,8 @@ function CreateTabEquipment() {
     CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Sword 3"   -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Broken Giant's Knife."                                                                                         -Credits "Admentus (original) & Anthrogi (ported)"
     CreateReduxSlider   -Name "Stick"        -Text "Stick"            -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Deku Stick.`nNOTE: Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!" -Credits "Anthrogi"
     CreateReduxSlider   -Name "Hammer"       -Text "Hammer"           -Default 2500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Megaton Hammer."                                                                                               -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"         -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
-    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"         -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot."                                                                                                            -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
+    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"         -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot.`nNOTE: Going above the default length by a certain amount can look weird."                                  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"         -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot.`nNOTE: Going above the default length by a certain amount can look weird."                                  -Credits "Admentus (original) & Anthrogi (ported)"
 }
 
 

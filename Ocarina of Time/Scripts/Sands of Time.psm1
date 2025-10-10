@@ -43,8 +43,7 @@ function CreateOptions() {
     
     CreateOptionsPanel
 
-    $note1 = "May possibly cause sequence breaking!"
-    $note2 = "Going above the default length by a certain amount can look weird."
+    $note = "May possibly cause sequence breaking!"
 
     # MISC #
 
@@ -54,8 +53,8 @@ function CreateOptions() {
     CreateReduxCheckbox -Name "FastRang" 	    -Text "Quicker Boomerang"          -Info "Boomerang flys faster and returns quicker while the return timer is reduced to approximate the original distance."                             -Credits "Anthrogi"
     CreateReduxCheckBox -Name "FastArrows" 	    -Text "Less Magic Arrows Cooldown" -Info "The burst animation for Fire, Ice and Light Arrows are shorter which allows for shooting the next magic arrow a bit quicker."                  -Credits "Anthrogi" -Warning "Due to other combined functions in the bytes for this hack, has odd changes to rotation effects when held before shot in some areas."
     CreateReduxCheckBox -Name "FastCharge" 	    -Text "Faster Lv2 Magic Spin"      -Info "Allows you to perform the lv2 magic spin attack quicker during charge."                                                                        -Credits "Anthrogi"
-    CreateReduxCheckbox -Name "FastRoll" 	    -Text "Increased Rolling Distance" -Info "You'll move further upon rolling."                                                                                                             -Credits "Anthrogi" -Warning $note1
-    CreateReduxCheckbox -Name "FastZTargetMove" -Text "Faster Lock-On Movement"    -Info "You'll move faster when targeting something."                                                                                                  -Credits "Anthrogi" -Warning $note1
+    CreateReduxCheckbox -Name "FastRoll" 	    -Text "Increased Rolling Distance" -Info "You'll move further upon rolling."                                                                                                             -Credits "Anthrogi" -Warning $note
+    CreateReduxCheckbox -Name "FastZTargetMove" -Text "Faster Lock-On Movement"    -Info "You'll move faster when targeting something."                                                                                                  -Credits "Anthrogi" -Warning $note
 
     # HERO MODE #
 
@@ -78,6 +77,6 @@ function CreateOptions() {
     CreateReduxComboBox -Name "Hammer"       -Text "Hammer"         -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the custom Megaton Hammer."                                                                                              -Credits "Admentus (original) & Anthrogi (ported)"
     CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Sword 3" -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the custom Broken Giant's Knife."                                                                                         -Credits "Admentus (original) & Anthrogi (ported)"
     CreateReduxSlider   -Name "Stick"        -Text "Stick"          -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the custom Deku Stick.`nNOTE: Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!" -Credits "Anthrogi"
-    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"       -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot."                                                                                                                   -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
-    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"       -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot."                                                                                                                   -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
+    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"       -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot.`nNOTE: Going above the default length by a certain amount can look weird."                                         -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"       -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot.`nNOTE: Going above the default length by a certain amount can look weird."                                         -Credits "Admentus (original) & Anthrogi (ported)"
 }
