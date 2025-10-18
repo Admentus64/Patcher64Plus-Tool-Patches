@@ -67,7 +67,7 @@
 }, {
 
 	"title"				: "Time Lost",
-	"version"			: "1.05",
+	"version"			: "1.06",
 	"console"			: "Native",
 	"compress"			: 0,
 	"patch"				: "Compressed\\time_lost.bps",
