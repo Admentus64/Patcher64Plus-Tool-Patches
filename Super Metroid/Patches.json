@@ -4,14 +4,14 @@
 	"version"		: "1.2",
 	"patch"			: "Compressed\\subversion.1.2",
 	"output"		: "subversion",
-	"tooltip"		: "Samus goes off to planet TN578 to stop the space pirates from utilizing their new tech called Verdite.{0}Has a new story, world and power up mechanics!"
+	"tooltip"		: "Samus goes off to planet TN578 to stop the space pirates from utilizing their new tech called Verdite{0}Has a new story, world and power up mechanics!"
 
 }, {
 
 	"title"			: "Hyper Metroid Super",
 	"patch"			: "Compressed\\hyper_metroid_super",
-	"output"		: "hyper",
-	"tooltip"		: "Samus goes off on another thrilling adventure, but things seem rather new...{0}Uses project base by Grime for smoother gameplay and new features along with new moves Samus can perform."
+	"output"		: "hyper_metroid_super",
+	"tooltip"		: "Samus goes off on another thrilling adventure, but things seem rather new...{0}Uses project base by Grime for smoother gameplay and new features along with new moves Samus can perform"
 
 }, {
 
@@ -19,6 +19,6 @@
 	"version"		: "1.2",
 	"patch"			: "Compressed\\super_metroid_x_fusion",
 	"output"		: "x_fusion",
-	"tooltip"		: "A retelling of metroid fusion in the style of the SNES metroid, with a new twist to the story.{0}Some things aren't as they seem and is quite challenging!"
+	"tooltip"		: "A retelling of metroid fusion in the style of the SNES metroid, with a new twist to the story{0}Some things aren't as they seem and is quite challenging!"
 
 } ]
