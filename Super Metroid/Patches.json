@@ -1,6 +1,6 @@
 [ {
 
-	"title"			: "Subversion",
+	"title"			: "Super Metroid Subversion",
 	"version"		: "1.2",
 	"patch"			: "Compressed\\subversion.1.2",
 	"output"		: "subversion",
@@ -10,7 +10,7 @@
 
 	"title"			: "Hyper Metroid Super",
 	"patch"			: "Compressed\\hyper_metroid_super",
-	"output"		: "hyper_metroid_super",
+	"output"		: "hyper",
 	"tooltip"		: "Samus goes off on another thrilling adventure, but things seem rather new...{0}Uses project base by Grime for smoother gameplay and new features along with new moves Samus can perform."
 
 }, {
@@ -18,7 +18,7 @@
 	"title"			: "Super Metroid X-Fusion",
 	"version"		: "1.2",
 	"patch"			: "Compressed\\super_metroid_x_fusion",
-	"output"		: "super_metroid_x_fusion",
+	"output"		: "x_fusion",
 	"tooltip"		: "A retelling of metroid fusion in the style of the SNES metroid, with a new twist to the story.{0}Some things aren't as they seem and is quite challenging!"
 
 } ]
