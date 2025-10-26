@@ -9,7 +9,7 @@
 	"script"			: "The Sealed Palace",
 	"settings"			: "The Sealed Palace",
 	"output"			: "the_sealed_palace",
-	"tooltip"			: "A small-sized ROM hack in a completely new setting"
+	"tooltip"			: "A large-sized ROM hack in an alternative timeline to Ocarina of Time, set after the disappearence of the Hero of Time"
 
 }, {
 
@@ -20,7 +20,7 @@
 	"console"			: "Native",
 	"patch"				: "Decompressed\\ultimate_trial.bps",
 	"output"			: "ultimate_trial",
-	"tooltip"			: "A rogue-lite ROM hack in a completely new setting"
+	"tooltip"			: "A rogue-lite ROM hack in a completely new setting{0}Can you handle the challenge?"
 
 }, {
 
@@ -50,7 +50,7 @@
 	"compress"			: 0,
 	"patch"				: "Decompressed\\star_fox_survival.bps",
 	"output"			: "star_fox_survival",
-	"tooltip"			: "Play as Fox whos Arwing has crash landed on an unknown planet{0}Survive for as long as you can"
+	"tooltip"			: "Play as Fox whose Arwing has crash landed on an unknown planet{0}Survive for as long as you can!"
 
 }, {
 
@@ -61,7 +61,7 @@
 	"compress"			: 0,
 	"patch"				: "Decompressed\\sands_of_time.bps",
 	"output"			: "sands_of_time",
-	"tooltip"			: "A large-sized ROM hack in a completely new setting"
+	"tooltip"			: "A large-sized ROM hack in an age where exploration for power and wealth are long sought after"
 
 }, {
 
