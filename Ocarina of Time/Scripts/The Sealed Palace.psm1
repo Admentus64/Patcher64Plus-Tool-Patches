@@ -365,7 +365,6 @@ function CreateTabColors() {
 }
 
 
-
 #==============================================================================================================================================================================================
 function CreateTabQuantity() {
 
@@ -410,6 +409,8 @@ function CreateTabEquipment() {
     CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"             -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot"                                     -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
     CreateReduxSlider   -Name "Longshot"     -Text "Longshot"             -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot"                                     -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
 }
+
+
 #==============================================================================================================================================================================================
 function CreateTrailColorOptions() {
 
