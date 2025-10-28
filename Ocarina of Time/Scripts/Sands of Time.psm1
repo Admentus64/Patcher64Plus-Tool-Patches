@@ -44,18 +44,18 @@ function CreateOptions() {
     CreateOptionsPanel
 
     $note1 = "May possibly cause sequence breaking!"
-    $note2 = "Going above the default length by a certain amount can look weird."
+    $note2 = "Going above the default length by a certain amount can look weird"
 
     # MISC #
 
     CreateReduxGroup    -Tag  "Gameplay"        -Text "Misc"
-    CreateReduxCheckBox -Name "BlackBars"       -Text "No Black Bars"    	       -Info "Removes the black bars shown on the top & bottom of the screen.`nThis hack removes all instances of black bars rather than Z-targeting alone." -Credits "Admentus & Anthrogi (ported)"
-    CreateReduxCheckBox -Name "HPSound"      	-Text "No Low HP Sound"		       -Info "Remove the sound effect for the low HP beeping."                                                                                               -Credits "Randomizer & Anthrogi (ported)"
-    CreateReduxCheckbox -Name "FastRang" 	    -Text "Quicker Bomberang"          -Info "Bomberang flys faster and returns quicker while the return timer is reduced to approximate the original distance."                             -Credits "Anthrogi"
-    CreateReduxCheckBox -Name "FastArrows" 	    -Text "Less Magic Arrows Cooldown" -Info "The burst animation for Fire, Ice and Light Arrows are shorter which allows for shooting the next magic arrow a bit quicker."                  -Credits "Anthrogi" -Warning "Due to other combined functions in the bytes for this hack, has odd changes to rotation effects when held before shot in some areas."
-    CreateReduxCheckBox -Name "FastCharge" 	    -Text "Faster Lv2 Magic Spin"      -Info "Allows you to perform the lv2 magic spin attack quicker during charge."                                                                        -Credits "Anthrogi"
-    CreateReduxCheckbox -Name "FastRoll" 	    -Text "Increased Rolling Distance" -Info "You'll move further upon rolling."                                                                                                             -Credits "Anthrogi" -Warning $note1
-    CreateReduxCheckbox -Name "FastZTargetMove" -Text "Faster Lock-On Movement"    -Info "You'll move faster when targeting something."                                                                                                  -Credits "Anthrogi" -Warning $note1
+    CreateReduxCheckBox -Name "BlackBars"       -Text "No Black Bars"    	       -Info "Removes the black bars shown on the top & bottom of the screen.`nThis hack removes all instances of black bars rather than Z-targeting alone" -Credits "Admentus & Anthrogi (ported)"
+    CreateReduxCheckBox -Name "HPSound"      	-Text "No Low HP Sound"		       -Info "Remove the sound effect for the low HP beeping"                                                                                               -Credits "Randomizer & Anthrogi (ported)"
+    CreateReduxCheckbox -Name "FastRang" 	    -Text "Quicker Bomberang"          -Info "Bomberang flys faster and returns quicker while the return timer is reduced to approximate the original distance"                             -Credits "Anthrogi"
+    CreateReduxCheckBox -Name "FastArrows" 	    -Text "Less Magic Arrows Cooldown" -Info "The burst animation for Fire, Ice and Light Arrows are shorter which allows for shooting the next magic arrow a bit quicker"                  -Credits "Anthrogi" -Warning "Due to other combined functions in the bytes for this hack, has odd changes to rotation effects when held before shot in some areas"
+    CreateReduxCheckBox -Name "FastCharge" 	    -Text "Faster Lv2 Magic Spin"      -Info "Allows you to perform the lv2 magic spin attack quicker during charge"                                                                        -Credits "Anthrogi"
+    CreateReduxCheckbox -Name "FastRoll" 	    -Text "Increased Rolling Distance" -Info "You'll move further upon rolling"                                                                                                             -Credits "Anthrogi" -Warning $note1
+    CreateReduxCheckbox -Name "FastZTargetMove" -Text "Faster Lock-On Movement"    -Info "You'll move faster when targeting something"                                                                                                  -Credits "Anthrogi" -Warning $note1
 
     # HERO MODE #
 
@@ -65,19 +65,19 @@ function CreateOptions() {
     # MAGIC COSTS #
 
     CreateReduxGroup   -Tag  "Magic"     -Text "Magic Costs"
-    CreateReduxTextBox -Name "FireArrow" -Text "Fire Arrow"   -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Fire Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."  -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "IceArrow"  -Text "Ice Arrow"    -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Ice Arrows.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."   -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Burst"  	 -Text "Din's Fire"   -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Din's Fire.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter."   -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxTextBox -Name "Barrier"   -Text "Nayru's Love" -Value 24 -Min 2 -Max 96 -Info "Set the magic cost for using Nayru's Love.`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter." -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "FireArrow" -Text "Fire Arrow"   -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Fire Arrows`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter"  -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "IceArrow"  -Text "Ice Arrow"    -Value 4  -Min 2 -Max 96 -Info "Set the magic cost for using Ice Arrows`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter"   -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Burst"  	 -Text "Din's Fire"   -Value 12 -Min 2 -Max 96 -Info "Set the magic cost for using Din's Fire`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter"   -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxTextBox -Name "Barrier"   -Text "Nayru's Love" -Value 24 -Min 2 -Max 96 -Info "Set the magic cost for using Nayru's Love`n48 is the maximum amount of the standard magic meter while 96 is the maximum amount of the double magic meter" -Credits "Admentus (original) & Anthrogi (ported)"
 
     # EQUIPMENT #
 
     CreateReduxGroup   	-Tag  "Equipment"    -Text "Equipment Adjustments"
-    CreateReduxComboBox -Name "Sword2"       -Text "Long Sword"        -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Long Sword."       -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "Sword3"       -Text "Nail Knife"        -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Nail Knife."       -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxComboBox -Name "Hammer"       -Text "Armor Breaker"     -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Armor Breaker."    -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Nail Knife" -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Broken Nail Knife." -Credits "Admentus (original) & Anthrogi (ported)"
-    CreateReduxSlider   -Name "Stick"        -Text "Deku Stick"        -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Deku Stick."        -Credits "Anthrogi"                                -Warning "Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!"
-    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"          -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot."                 -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
-    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"          -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot."                 -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
+    CreateReduxComboBox -Name "Sword2"       -Text "Long Sword"        -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Long Sword"       -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "Sword3"       -Text "Nail Knife"        -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Nail Knife"       -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxComboBox -Name "Hammer"       -Text "Armor Breaker"     -Default 1 -Items ("Default", "Big", "Very Big")                  -Info "Select the length size of the Armor Breaker"    -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "BrokenSword3" -Text "Broken Nail Knife" -Default 1500 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Broken Nail Knife" -Credits "Admentus (original) & Anthrogi (ported)"
+    CreateReduxSlider   -Name "Stick"        -Text "Deku Stick"        -Default 5000 -Min 1024 -Max 9216 -Freq 512 -Small 256 -Large 512 -Info "Set the hitbox length of the Deku Stick"        -Credits "Anthrogi"                                -Warning "Also affects the tip that can be set aflame, use carefully if trying to set it as a torch!"
+    CreateReduxSlider   -Name "Hookshot"     -Text "Hookshot"          -Default 13   -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Hookshot"                 -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
+    CreateReduxSlider   -Name "Longshot"     -Text "Longshot"          -Default 104  -Min 10   -Max 110  -Freq 10  -Small 5   -Large 10  -Info "Set the length of the Longshot"                 -Credits "Admentus (original) & Anthrogi (ported)" -Warning $note2
 }
